@@ -19,6 +19,7 @@ public class Projectile : MonoBehaviour
     float activeTime;
     float currentTime;
 
+    public bool isActive;
     
 
 
@@ -32,21 +33,27 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
-        rb.velocity = new Vector2((projectileSpeed * Time.deltaTime) * direction, 0);
-
-        currentTime -= Time.deltaTime;
-        if(currentTime < 0)
+        if (isActive)
         {
-            EndProjectile();
-        }
+            rb.velocity = new Vector2((projectileSpeed * Time.deltaTime) * direction, 0);
 
+            currentTime -= Time.deltaTime;
+            if (currentTime < 0)
+            {
+                EndProjectile();
+            }
+        }
     }
     public void InstantiateProjectileSetting(int dir, projectileTypes type, Vector2 playerPos)
     {
+        currentTime = activeTime;
+        gameObject.SetActive(true);
+        isActive = true;
         transform.position = playerPos;
         direction = -dir;
         ChangeProjectileType(type);
     }
+
     public void ChangeProjectileType(projectileTypes type)
     {
         projType = type;
@@ -69,6 +76,7 @@ public class Projectile : MonoBehaviour
 
     public void EndProjectile()
     {
+        isActive = false;
         gameObject.SetActive(false);
     }
 }

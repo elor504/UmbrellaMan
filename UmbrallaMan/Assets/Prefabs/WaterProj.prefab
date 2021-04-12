@@ -48,7 +48,8 @@ MonoBehaviour:
   purifiedColor: {r: 0.0036325455, g: 0, b: 1, a: 1}
   corruptiveColor: {r: 0.013180494, g: 1, b: 0, a: 1}
   projectileSpeed: 75
-  activeTime: 20
+  activeTime: 5
+  isActive: 0
 --- !u!212 &5764394008744116982
 SpriteRenderer:
   m_ObjectHideFlags: 0
