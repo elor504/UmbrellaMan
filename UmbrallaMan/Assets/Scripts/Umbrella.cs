@@ -4,22 +4,27 @@ using UnityEngine;
 
 public class Umbrella : MonoBehaviour
 {
+
+
+
     private PlayerManager playerManager;
+    [SerializeField]
+    Projectile projPrefab;
 
-    unbreallaState currentState;
 
-    public enum unbreallaState
+    private void Update()
     {
-        none,
-        umbreallaUp,
-        umbreallaDown
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Shoot();
+        }
     }
 
 
     public void Shoot()
     {
-
-
+        Projectile projectile = Instantiate(projPrefab);
+        projectile.InstantiateProjectileSetting(Mathf.RoundToInt(transform.localScale.x), projectileTypes.purified,transform.position);
     }
 
 }

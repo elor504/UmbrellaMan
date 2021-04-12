@@ -23,6 +23,7 @@ public class PlayerManager : MonoBehaviour
 
         rb2D = GetComponent<Rigidbody2D>();
         spriteRender = GetComponent<SpriteRenderer>();
+        
     }
 
     void Update()
