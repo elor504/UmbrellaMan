@@ -11,8 +11,8 @@ public class PlayerManager : MonoBehaviour
     public Transform groundCheck;
     public LayerMask groundLayer;
     public bool isGrounded;
-    public int health;
-    public int numOfHearts;
+    public int currentHealth;
+    public int maxHealth;
     public Image[] hearts;
     public Sprite fullHeart;
     public Sprite emptyHeart;
@@ -21,10 +21,9 @@ public class PlayerManager : MonoBehaviour
 
 
     #region Private Fields
-    private int currentHp;
     private SpriteRenderer spriteRender;
-    bool isCuteScene;
-    bool isFacingRight;
+    private bool isCuteScene;
+    private bool isFacingRight;
     private Rigidbody2D rb2D;
     #endregion
 
@@ -33,7 +32,8 @@ public class PlayerManager : MonoBehaviour
     CameraController cameraController;
 
     private void Start()
-    {   
+    {
+
 
         rb2D = GetComponent<Rigidbody2D>();
         spriteRender = GetComponent<SpriteRenderer>();
@@ -45,8 +45,6 @@ public class PlayerManager : MonoBehaviour
 
         PlayerMovementHandle();
         PlayerHp();
-
-
 
     }
 
@@ -104,20 +102,13 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-
     public void PlayerHp () {
 
-        if (health > numOfHearts)
-        {
-            health = numOfHearts;
-        }
-
-
-
+        
         for (int i = 0; i < hearts.Length; i++)
         {
 
-            if (i < health)
+            if (i < currentHealth)
             {
                 hearts[i].sprite = fullHeart;
             }
@@ -127,7 +118,7 @@ public class PlayerManager : MonoBehaviour
             }
 
 
-            if (i < numOfHearts)
+            if (i < maxHealth)
             {
                 hearts[i].enabled = true;
             }
@@ -136,12 +127,25 @@ public class PlayerManager : MonoBehaviour
                 hearts[i].enabled = false;
             }
         }
+
+
+
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+
+
     }
 
-
-
-    public void GetDamage()
+    public void GetDamage(int amount)
     {
+        currentHealth -= amount;
 
+        if (currentHealth <=0)
+        {
+            //Dead animation 
+            //GameOverScreen
+        }
     }
 }
