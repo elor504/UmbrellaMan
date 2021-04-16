@@ -1,22 +1,36 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
+    #region Public Fields
     public float movmentSpeed;
     public float jumpForce;
-    private int currentHp;
     public Transform groundCheck;
     public LayerMask groundLayer;
-    bool isCuteScene;
-   public bool isGrounded;
-    private SpriteRenderer spriteRender;
-    bool isFacingRight;
+    public bool isGrounded;
+    public int health;
+    public int numOfHearts;
+    public Image[] hearts;
+    public Sprite fullHeart;
+    public Sprite emptyHeart;
 
+    #endregion
+
+
+    #region Private Fields
+    private int currentHp;
+    private SpriteRenderer spriteRender;
+    bool isCuteScene;
+    bool isFacingRight;
     private Rigidbody2D rb2D;
-    CameraController cameraController;
+    #endregion
+
+
     Umbrella playerUmbrella;
+    CameraController cameraController;
 
     private void Start()
     {   
@@ -30,6 +44,9 @@ public class PlayerManager : MonoBehaviour
     {
 
         PlayerMovementHandle();
+        PlayerHp();
+
+
 
     }
 
@@ -86,6 +103,42 @@ public class PlayerManager : MonoBehaviour
             transform.localScale = scale;
         }
     }
+
+
+    public void PlayerHp () {
+
+        if (health > numOfHearts)
+        {
+            health = numOfHearts;
+        }
+
+
+
+        for (int i = 0; i < hearts.Length; i++)
+        {
+
+            if (i < health)
+            {
+                hearts[i].sprite = fullHeart;
+            }
+            else
+            {
+                hearts[i].sprite = emptyHeart;
+            }
+
+
+            if (i < numOfHearts)
+            {
+                hearts[i].enabled = true;
+            }
+            else
+            {
+                hearts[i].enabled = false;
+            }
+        }
+    }
+
+
 
     public void GetDamage()
     {
