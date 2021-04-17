@@ -944,6 +944,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a3c9f30e2cd5c84db669295309c74ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  takeDmgEveryXSeconds: 4
 --- !u!1 &1646885093
 GameObject:
   m_ObjectHideFlags: 0

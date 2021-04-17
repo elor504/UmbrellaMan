@@ -6,7 +6,8 @@ public class PlatformerManager : MonoBehaviour
 {
 
     bool canTakeDmg = true;
-    
+
+    public int takeDmgEveryXSeconds;
 
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -27,7 +28,7 @@ public class PlatformerManager : MonoBehaviour
         IEnumerator WaitForSeconds()
         {
             canTakeDmg = false;
-            yield return new WaitForSecondsRealtime(3);
+            yield return new WaitForSecondsRealtime(takeDmgEveryXSeconds);
             canTakeDmg = true;
         }
     }
