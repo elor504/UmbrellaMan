@@ -20,7 +20,7 @@ public class Projectile : MonoBehaviour
     float currentTime;
 
     public bool isActive;
-    
+    bool isGoingUpward;
 
 
     private void Awake()
@@ -35,8 +35,10 @@ public class Projectile : MonoBehaviour
     {
         if (isActive)
         {
+            if(!isGoingUpward)
             rb.velocity = new Vector2((projectileSpeed * Time.deltaTime) * direction, 0);
-
+            else
+            rb.velocity = new Vector2(0, (projectileSpeed * Time.deltaTime) * direction);
             currentTime -= Time.deltaTime;
             if (currentTime < 0)
             {
@@ -44,13 +46,15 @@ public class Projectile : MonoBehaviour
             }
         }
     }
-    public void InstantiateProjectileSetting(int dir, projectileTypes type, Vector2 playerPos)
+    public void InstantiateProjectileSetting(int dir, projectileTypes type, Vector2 playerPos,bool shootingUpward)
     {
         currentTime = activeTime;
         gameObject.SetActive(true);
         isActive = true;
         transform.position = playerPos;
+        isGoingUpward = shootingUpward;
         direction = -dir;
+        
         ChangeProjectileType(type);
     }
 
