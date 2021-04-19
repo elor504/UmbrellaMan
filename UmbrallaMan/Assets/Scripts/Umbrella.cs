@@ -3,27 +3,28 @@ using UnityEngine;
 
 public class Umbrella : MonoBehaviour
 {
+    private PlayerManager playerManager;
     [Header("Ammonatium related")]
     [SerializeField]
     private int maxAmmo;
     [SerializeField]
     private int currentAmmoAmount;
-
-    [Space(5)]
-
-    [Header("")]
     [SerializeField]
     List<Projectile> projectilePooling;
     bool canUseActiveProjectile;
 
-    private PlayerManager playerManager;
+
 
     [SerializeField]
     Projectile projPrefab;
     [SerializeField]
     Transform umbrellaNozzle;
+    [Space(2)]
+    [Header("Shield Related")]
+    [SerializeField]
+    bool isShielding;
+    public bool getIsShielding => isShielding;
 
-    #region aiming vectors
     bool isAmingUp;
     bool getIsAimingUp
     {
@@ -43,17 +44,16 @@ public class Umbrella : MonoBehaviour
             return isAmingUp;
         }
     }
-    #endregion
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && CanShoot())
+        if (Input.GetKeyDown(KeyCode.Q) && CanShoot() && !isShielding)
         {
             Shoot();
         }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            //AddAmmo(5);
-        }
+
+        OpenUmbrella();
+
+
         AimUp();
     }
 
@@ -91,10 +91,27 @@ public class Umbrella : MonoBehaviour
         }
     }
 
+    void OpenUmbrella()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+            if (!isShielding)
+                isShielding = true;
+        }
+        else
+        {
+            if (isShielding)
+                isShielding = false;
+        }
+    }
+
     public void AddAmmo(int amount)
     {
         currentAmmoAmount += amount;
-        Mathf.Clamp(currentAmmoAmount, 0, maxAmmo);
+        if (currentAmmoAmount > maxAmmo)
+            currentAmmoAmount = maxAmmo;
+
+        // Mathf.Clamp(currentAmmoAmount, 0, maxAmmo);
     }
     public void Shoot()
     {

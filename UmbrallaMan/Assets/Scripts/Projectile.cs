@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
@@ -40,10 +38,10 @@ public class Projectile : MonoBehaviour
     {
         if (isActive)
         {
-            if(!isGoingUpward)
-            rb.velocity = new Vector2((projectileSpeed * Time.deltaTime) * direction, 0);
+            if (!isGoingUpward)
+                rb.velocity = new Vector2((projectileSpeed * Time.deltaTime) * direction, 0);
             else
-            rb.velocity = new Vector2(0, (projectileSpeed * Time.deltaTime) * direction);
+                rb.velocity = new Vector2(0, (projectileSpeed * Time.deltaTime) * 1);
             currentTime -= Time.deltaTime;
             if (currentTime < 0)
             {
@@ -51,7 +49,7 @@ public class Projectile : MonoBehaviour
             }
         }
     }
-    public void InstantiateProjectileSetting(int dir, projectileTypes type, Vector2 playerPos,bool shootingUpward)
+    public void InstantiateProjectileSetting(int dir, projectileTypes type, Vector2 playerPos, bool shootingUpward)
     {
         currentTime = activeTime;
         gameObject.SetActive(true);
@@ -59,7 +57,7 @@ public class Projectile : MonoBehaviour
         transform.position = playerPos;
         isGoingUpward = shootingUpward;
         direction = -dir;
-        
+
         ChangeProjectileType(type);
     }
 
@@ -92,16 +90,31 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
+        {
+            PlayerManager player = collision.GetComponent<PlayerManager>();
+
+
             if (projType == projectileTypes.corruptive)
             {
-                collision.GetComponent<PlayerManager>().GetDamage(1);
+                player.GetDamage(1);
                 currentTime = 0;
-                //EndProjectile();
             }
+
+
+        }
+        else if (collision.gameObject.tag == "Shield")
+        {
+            
+            Umbrella umbrella = collision.transform.parent.parent.GetComponent<Umbrella>();
+            if (umbrella.getIsShielding)
+            {
+                umbrella.AddAmmo(1);
+                currentTime = 0;
+            }
+        }
     }
-
-
 }
+
 public enum projectileTypes
 {
     purified,

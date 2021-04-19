@@ -268,6 +268,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPurified: 0
+  purifiedColor: {r: 0, g: 0, b: 0, a: 0}
+  corruptiveColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!212 &98196276
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -427,7 +429,12 @@ PrefabInstance:
     - target: {fileID: 5203330002223574495, guid: 3c63b3d9af068b547845472f1aa69e81,
         type: 3}
       propertyPath: currentAmmoAmount
-      value: 5
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5203330003099661164, guid: 3c63b3d9af068b547845472f1aa69e81,
+        type: 3}
+      propertyPath: m_Name
+      value: Mozzle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c63b3d9af068b547845472f1aa69e81, type: 3}
@@ -617,6 +624,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8bf52f060cdd8914097f08df0ae56af6, type: 3}
+--- !u!1 &907160519
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 907160520}
+  - component: {fileID: 907160521}
+  m_Layer: 0
+  m_Name: Shield
+  m_TagString: Shield
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &907160520
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907160519}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.157, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1263298022}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &907160521
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907160519}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.044111304, y: -0.16383108}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.041720256, y: 0.67233783}
+  m_EdgeRadius: 0
 --- !u!4 &930685439 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1972266092938168430, guid: 8bf52f060cdd8914097f08df0ae56af6,
@@ -715,6 +779,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPurified: 1
+  purifiedColor: {r: 0, g: 0, b: 0, a: 0}
+  corruptiveColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!212 &1041300246
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -784,6 +850,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1972266092938168430, guid: 8bf52f060cdd8914097f08df0ae56af6,
     type: 3}
   m_PrefabInstance: {fileID: 4194174429472907957}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1263298022 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5203330003373869353, guid: 3c63b3d9af068b547845472f1aa69e81,
+    type: 3}
+  m_PrefabInstance: {fileID: 215161460}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1364032507 stripped
 MonoBehaviour:
