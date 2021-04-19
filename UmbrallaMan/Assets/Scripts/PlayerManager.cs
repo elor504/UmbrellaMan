@@ -1,25 +1,39 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
+    #region Public Fields
     public float movmentSpeed;
     public float jumpForce;
-    private int currentHp;
     public Transform groundCheck;
     public LayerMask groundLayer;
-    bool isCuteScene;
-   public bool isGrounded;
-    private SpriteRenderer spriteRender;
-    bool isFacingRight;
+    public bool isGrounded;
+    public int currentHealth;
+    public int maxHealth;
+    public Image[] hearts;
+    public Sprite fullHeart;
+    public Sprite emptyHeart;
 
+    #endregion
+
+
+    #region Private Fields
+    private SpriteRenderer spriteRender;
+    private bool isCuteScene;
+    private bool isFacingRight;
     private Rigidbody2D rb2D;
-    CameraController cameraController;
+    #endregion
+
+
     Umbrella playerUmbrella;
+    CameraController cameraController;
 
     private void Start()
-    {   
+    {
+
 
         rb2D = GetComponent<Rigidbody2D>();
         spriteRender = GetComponent<SpriteRenderer>();
@@ -30,6 +44,7 @@ public class PlayerManager : MonoBehaviour
     {
 
         PlayerMovementHandle();
+        PlayerHp();
 
     }
 
@@ -87,8 +102,50 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void GetDamage()
-    {
+    public void PlayerHp () {
 
+        
+        for (int i = 0; i < hearts.Length; i++)
+        {
+
+            if (i < currentHealth)
+            {
+                hearts[i].sprite = fullHeart;
+            }
+            else
+            {
+                hearts[i].sprite = emptyHeart;
+            }
+
+
+            if (i < maxHealth)
+            {
+                hearts[i].enabled = true;
+            }
+            else
+            {
+                hearts[i].enabled = false;
+            }
+        }
+
+
+
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+
+
+    }
+
+    public void GetDamage(int amount)
+    {
+        currentHealth -= amount;
+
+        if (currentHealth <=0)
+        {
+            //Dead animation 
+            //GameOverScreen
+        }
     }
 }
