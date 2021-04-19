@@ -33,15 +33,9 @@ public class Umbrella : MonoBehaviour
             {
                 isAmingUp = value;
                 if (isAmingUp)
-                {
-                    umbrellaNozzle.parent.transform.localPosition = aimingUpPos;
                     umbrellaNozzle.parent.transform.localRotation = Quaternion.Euler(0, 0, -90);
-                }
                 else
-                {
-                    umbrellaNozzle.parent.transform.localPosition = aimingSidePos;
                     umbrellaNozzle.parent.transform.localRotation = new Quaternion();
-                }
             }
         }
         get
@@ -49,10 +43,6 @@ public class Umbrella : MonoBehaviour
             return isAmingUp;
         }
     }
-    [SerializeField]
-    Vector2 aimingUpPos;
-    [SerializeField]
-    Vector2 aimingSidePos;
     #endregion
     private void Update()
     {
@@ -62,7 +52,7 @@ public class Umbrella : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            AddAmmo(5);
+            //AddAmmo(5);
         }
         AimUp();
     }

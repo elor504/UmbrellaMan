@@ -23,12 +23,17 @@ public class Projectile : MonoBehaviour
     bool isGoingUpward;
 
 
+    // only for testing
+    [SerializeField]
+    bool isTest;
+
     private void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         currentTime = activeTime;
-
+        if (isTest)
+            InstantiateProjectileSetting(1, projectileTypes.corruptive, this.transform.position, false);
     }
 
     private void Update()
@@ -87,8 +92,12 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
-            if(projType == projectileTypes.corruptive)
-            collision.GetComponent<PlayerManager>().GetDamage(1);
+            if (projType == projectileTypes.corruptive)
+            {
+                collision.GetComponent<PlayerManager>().GetDamage(1);
+                currentTime = 0;
+                //EndProjectile();
+            }
     }
 
 
