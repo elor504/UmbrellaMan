@@ -83,6 +83,15 @@ public class Projectile : MonoBehaviour
         isActive = false;
         gameObject.SetActive(false);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+            if(projType == projectileTypes.corruptive)
+            collision.GetComponent<PlayerManager>().GetDamage(1);
+    }
+
+
 }
 public enum projectileTypes
 {
