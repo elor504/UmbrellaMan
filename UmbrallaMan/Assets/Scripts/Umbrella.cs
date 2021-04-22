@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Umbrella : MonoBehaviour
 {
-    private PlayerManager playerManager;
+    public PlayerManager playerManager;
     [Header("Ammonatium related")]
     [SerializeField]
     private int maxAmmo;
@@ -23,6 +23,7 @@ public class Umbrella : MonoBehaviour
     [Header("Shield Related")]
     [SerializeField]
     bool isShielding;
+    bool isGlide;
     public bool getIsShielding => isShielding;
 
     bool isAmingUp;
@@ -44,6 +45,10 @@ public class Umbrella : MonoBehaviour
             return isAmingUp;
         }
     }
+
+   
+
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q) && CanShoot() && !isShielding)
@@ -53,8 +58,12 @@ public class Umbrella : MonoBehaviour
 
         OpenUmbrella();
 
-
         AimUp();
+
+
+        
+            Glide();
+       
     }
 
 
@@ -90,6 +99,24 @@ public class Umbrella : MonoBehaviour
             }
         }
     }
+
+    void Glide()
+    {
+        if (!playerManager.isGrounded && getIsAimingUp)
+        {
+           // var rb2d = gameObject.GetComponent<Rigidbody2D>().gravityScale = -1;
+            var rb2d = gameObject.GetComponent<Rigidbody2D>().drag = 20;
+
+        }
+        else
+        {
+            var rb2d = gameObject.GetComponent<Rigidbody2D>().drag = 0;
+         //  var rb2d = gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+
+        }
+    }
+
+
 
     void OpenUmbrella()
     {

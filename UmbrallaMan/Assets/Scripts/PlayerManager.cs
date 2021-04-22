@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour
     public Transform groundCheck;
     public LayerMask groundLayer;
     public bool isGrounded;
+    public bool isGliding;
     public int currentHealth;
     public int maxHealth;
     public Image[] hearts;
@@ -77,6 +78,7 @@ public class PlayerManager : MonoBehaviour
 
     public void Jump()
     {
+     
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isGrounded)
@@ -85,7 +87,17 @@ public class PlayerManager : MonoBehaviour
                 rb2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
 
             }
+
         }
+        //else if ((Input.GetKey(KeyCode.Space)&& !isGrounded))
+        //{
+        //    isGliding = true;
+        //}
+        //else
+        //{
+        //    isGliding = false;
+        //}
+
 
     }
 

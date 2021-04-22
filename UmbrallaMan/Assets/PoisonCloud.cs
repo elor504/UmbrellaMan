@@ -7,12 +7,12 @@ public class PoisonCloud : MonoBehaviour
     [SerializeField] bool isPurified;
     [SerializeField] Color purifiedColor;
     [SerializeField] Color corruptiveColor;
-    SpriteRenderer renderer;
+    SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
-        if (renderer == null)
-            renderer = gameObject.GetComponent<SpriteRenderer>();
+        if (spriteRenderer == null)
+            spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         ChangeCloudSprite();
     }
 
@@ -25,9 +25,9 @@ public class PoisonCloud : MonoBehaviour
     void ChangeCloudSprite()
     {
         if (isPurified)
-            renderer.color = purifiedColor;
+            spriteRenderer.color = purifiedColor;
         else
-            renderer.color = corruptiveColor;
+            spriteRenderer.color = corruptiveColor;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
