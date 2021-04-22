@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Umbrella : MonoBehaviour
 {
-    public PlayerManager playerManager;
+  
     [Header("Ammonatium related")]
     [SerializeField]
     private int maxAmmo;
@@ -11,9 +11,10 @@ public class Umbrella : MonoBehaviour
     private int currentAmmoAmount;
     [SerializeField]
     List<Projectile> projectilePooling;
+    public PlayerManager playerManager;
     bool canUseActiveProjectile;
 
-
+    public int fallingSpeed;
 
     [SerializeField]
     Projectile projPrefab;
@@ -105,7 +106,7 @@ public class Umbrella : MonoBehaviour
         if (!playerManager.isGrounded && getIsAimingUp)
         {
            // var rb2d = gameObject.GetComponent<Rigidbody2D>().gravityScale = -1;
-            var rb2d = gameObject.GetComponent<Rigidbody2D>().drag = 20;
+            var rb2d = gameObject.GetComponent<Rigidbody2D>().drag = fallingSpeed;
 
         }
         else

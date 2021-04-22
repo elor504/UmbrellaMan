@@ -210,16 +210,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   isGrounded: 0
+  isGliding: 0
   currentHealth: 3
   maxHealth: 3
-  hearts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  fullHeart: {fileID: 8832167503239892954, guid: ae00dcce44c0d2a459b41ca72df7aa86,
-    type: 3}
-  emptyHeart: {fileID: -8761483511772326392, guid: ae00dcce44c0d2a459b41ca72df7aa86,
-    type: 3}
 --- !u!114 &5203330002223574495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,8 +226,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxAmmo: 5
-  currentAmmoAmount: 0
+  currentAmmoAmount: 5
   projectilePooling: []
+  playerManager: {fileID: 5203330002223574480}
+  fallingSpeed: 20
   projPrefab: {fileID: 2183452283022572550, guid: 8bf52f060cdd8914097f08df0ae56af6,
     type: 3}
   umbrellaNozzle: {fileID: 5203330003099661163}

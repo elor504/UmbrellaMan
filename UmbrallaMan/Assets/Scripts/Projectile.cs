@@ -2,28 +2,36 @@
 
 public class Projectile : MonoBehaviour
 {
+    #region Public Fields
+    public Color purifiedColor;
+    public bool isActive;
+    public Color corruptiveColor;
+    #endregion
+
+    #region Private Fields
+
     Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
+    projectileTypes projType;
+    float currentTime;
+    int direction;
+    bool isGoingUpward;
 
-    public Color purifiedColor;
-    public Color corruptiveColor;
+    #endregion
 
+    #region SerializeField
     [SerializeField]
     float projectileSpeed;
-    projectileTypes projType;
-    int direction;
 
     [SerializeField]
     float activeTime;
-    float currentTime;
-
-    public bool isActive;
-    bool isGoingUpward;
-
 
     // only for testing
     [SerializeField]
     bool isTest;
+    #endregion
+
+
 
     private void Awake()
     {

@@ -14,9 +14,9 @@ public class PlayerManager : MonoBehaviour
     public bool isGliding;
     public int currentHealth;
     public int maxHealth;
-    public Image[] hearts;
-    public Sprite fullHeart;
-    public Sprite emptyHeart;
+    // public Image[] hearts;  -- Moved to UiManager
+    //public Sprite fullHeart; -- Moved to UiManager
+    //public Sprite emptyHeart; -- Moved to UiManager
 
     #endregion
 
@@ -89,6 +89,7 @@ public class PlayerManager : MonoBehaviour
             }
 
         }
+        #region Testing for better results yet to delete
         //else if ((Input.GetKey(KeyCode.Space)&& !isGrounded))
         //{
         //    isGliding = true;
@@ -97,7 +98,7 @@ public class PlayerManager : MonoBehaviour
         //{
         //    isGliding = false;
         //}
-
+        #endregion
 
     }
 
@@ -116,37 +117,35 @@ public class PlayerManager : MonoBehaviour
 
     public void PlayerHp () {
 
-        
-        for (int i = 0; i < hearts.Length; i++)
-        {
+        #region Moved to other Script for testing yet to deleted.
+        //for (int i = 0; i < hearts.Length; i++) -- Moved to UiManager
+        //{
 
-            if (i < currentHealth)
-            {
-                hearts[i].sprite = fullHeart;
-            }
-            else
-            {
-                hearts[i].sprite = emptyHeart;
-            }
-
-
-            if (i < maxHealth)
-            {
-                hearts[i].enabled = true;
-            }
-            else
-            {
-                hearts[i].enabled = false;
-            }
-        }
+        //    if (i < currentHealth)
+        //    {
+        //        hearts[i].sprite = fullHeart;
+        //    }
+        //    else
+        //    {
+        //        hearts[i].sprite = emptyHeart;
+        //    }
 
 
+        //    if (i < maxHealth)
+        //    {
+        //        hearts[i].enabled = true;
+        //    }
+        //    else
+        //    {
+        //        hearts[i].enabled = false;
+        //    }
+        //}
+        #endregion
 
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
         }
-
 
     }
 
