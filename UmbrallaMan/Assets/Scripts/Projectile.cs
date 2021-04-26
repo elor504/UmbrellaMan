@@ -29,6 +29,8 @@ public class Projectile : MonoBehaviour
     // only for testing
     [SerializeField]
     bool isTest;
+    [SerializeField]
+    bool isGoingSideWay;
     #endregion
 
 
@@ -39,7 +41,12 @@ public class Projectile : MonoBehaviour
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         currentTime = activeTime;
         if (isTest)
-            InstantiateProjectileSetting(1, projectileTypes.corruptive, this.transform.position, false);
+        {
+            if (!isGoingSideWay)
+                InstantiateProjectileSetting(1, projectileTypes.corruptive, this.transform.position, false);
+            else
+                InstantiateProjectileSetting(1, projectileTypes.corruptive, this.transform.position, true);
+        }
     }
 
     private void Update()

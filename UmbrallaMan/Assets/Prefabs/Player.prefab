@@ -67,10 +67,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5203330002223574482}
   - component: {fileID: 5203330002223574483}
-  - component: {fileID: 5203330002223574484}
-  - component: {fileID: 5203330002223574481}
   - component: {fileID: 5203330002223574480}
   - component: {fileID: 5203330002223574495}
+  - component: {fileID: 5203330002223574484}
+  - component: {fileID: 5203330002223574481}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -144,6 +144,55 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5203330002223574480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5203330002223574485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 010aa797a7e23c24b9a39097037af55e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movmentSpeed: 5
+  jumpForce: 3
+  groundCheck: {fileID: 5203330002270602503}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  isGrounded: 0
+  isGliding: 0
+  currentHealth: 3
+  maxHealth: 3
+  damageTime: 3
+  CoroutineBreak: 0
+  gettingHit: 0
+--- !u!114 &5203330002223574495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5203330002223574485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 748302230f5ffa1408a4f33e7bfcc58b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallingSpeed: 20
+  maxAmmo: 10
+  currentAmmoAmount: 0
+  projectilePooling: []
+  playerManager: {fileID: 5203330002223574480}
+  shootingCD: 0.2
+  countShootinhCD: 0
+  projPrefab: {fileID: 2183452283022572550, guid: 8bf52f060cdd8914097f08df0ae56af6,
+    type: 3}
+  umbrellaNozzle: {fileID: 5203330003099661163}
+  tempSpriteShield: {fileID: 0}
+  isShielding: 0
 --- !u!50 &5203330002223574484
 Rigidbody2D:
   serializedVersion: 4
@@ -191,49 +240,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.19017641}
   m_EdgeRadius: 0
---- !u!114 &5203330002223574480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5203330002223574485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 010aa797a7e23c24b9a39097037af55e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movmentSpeed: 5
-  jumpForce: 3
-  groundCheck: {fileID: 5203330002270602503}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  isGrounded: 0
-  isGliding: 0
-  currentHealth: 3
-  maxHealth: 3
---- !u!114 &5203330002223574495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5203330002223574485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 748302230f5ffa1408a4f33e7bfcc58b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxAmmo: 5
-  currentAmmoAmount: 5
-  projectilePooling: []
-  playerManager: {fileID: 5203330002223574480}
-  fallingSpeed: 20
-  projPrefab: {fileID: 2183452283022572550, guid: 8bf52f060cdd8914097f08df0ae56af6,
-    type: 3}
-  umbrellaNozzle: {fileID: 5203330003099661163}
-  isShielding: 0
 --- !u!1 &5203330002270602520
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class Umbrella : MonoBehaviour
 {
-  
+    public int fallingSpeed;
+
     [Header("Ammonatium related")]
     [SerializeField]
     private int maxAmmo;
@@ -13,22 +14,39 @@ public class Umbrella : MonoBehaviour
     List<Projectile> projectilePooling;
     public PlayerManager playerManager;
     bool canUseActiveProjectile;
-
-    public int fallingSpeed;
-
+    [SerializeField]
+    float shootingCD;
+    [SerializeField]
+    float countShootinhCD;
     [SerializeField]
     Projectile projPrefab;
     [SerializeField]
     Transform umbrellaNozzle;
+    [SerializeField]
+    SpriteRenderer tempSpriteShield;
     [Space(2)]
     [Header("Shield Related")]
     [SerializeField]
     bool isShielding;
     bool isGlide;
-    public bool getIsShielding => isShielding;
+    public bool getIsShielding
+    {
+        set
+        {
+            if (isShielding != value)
+            {
+                isShielding = value;
+                tempSpriteShield.enabled = isShielding;
+            }
+        }
+        get
+        {
+            return isShielding;
+        }
+    }
 
     bool isAmingUp;
-    bool getIsAimingUp
+    public bool getIsAimingUp
     {
         set
         {
@@ -47,7 +65,7 @@ public class Umbrella : MonoBehaviour
         }
     }
 
-   
+
 
 
     private void Update()
@@ -56,23 +74,32 @@ public class Umbrella : MonoBehaviour
         {
             Shoot();
         }
-
+        shootingCountDownCounter();
         OpenUmbrella();
-
         AimUp();
+        Glide();
 
-
-        
-            Glide();
-       
     }
 
-
+    void shootingCountDownCounter()
+    {
+        if (countShootinhCD > 0)
+        {
+            countShootinhCD -= Time.deltaTime;
+        }
+        else if (countShootinhCD < 0)
+        {
+            countShootinhCD = 0;
+        }
+    }
     public bool CanShoot()
     {
         //checks if player has enough ammo
-        if (currentAmmoAmount > 0)
+        if (countShootinhCD == 0 && currentAmmoAmount > 0)
+        {
+            countShootinhCD = shootingCD;
             return true;
+        }
         else
             return false;
     }
@@ -105,14 +132,14 @@ public class Umbrella : MonoBehaviour
     {
         if (!playerManager.isGrounded && getIsAimingUp)
         {
-           // var rb2d = gameObject.GetComponent<Rigidbody2D>().gravityScale = -1;
+            // var rb2d = gameObject.GetComponent<Rigidbody2D>().gravityScale = -1;
             var rb2d = gameObject.GetComponent<Rigidbody2D>().drag = fallingSpeed;
 
         }
         else
         {
             var rb2d = gameObject.GetComponent<Rigidbody2D>().drag = 0;
-         //  var rb2d = gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+            //  var rb2d = gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
 
         }
     }
@@ -123,13 +150,13 @@ public class Umbrella : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            if (!isShielding)
-                isShielding = true;
+            if (!getIsShielding)
+                getIsShielding = true;
         }
         else
         {
-            if (isShielding)
-                isShielding = false;
+            if (getIsShielding)
+                getIsShielding = false;
         }
     }
 

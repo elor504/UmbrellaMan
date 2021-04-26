@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -14,6 +12,9 @@ public class PlayerManager : MonoBehaviour
     public bool isGliding;
     public int currentHealth;
     public int maxHealth;
+    public float damageTime;
+    public bool CoroutineBreak;
+    public bool gettingHit;
     // public Image[] hearts;  -- Moved to UiManager
     //public Sprite fullHeart; -- Moved to UiManager
     //public Sprite emptyHeart; -- Moved to UiManager
@@ -26,6 +27,7 @@ public class PlayerManager : MonoBehaviour
     private bool isCuteScene;
     private bool isFacingRight;
     private Rigidbody2D rb2D;
+
     #endregion
 
 
@@ -38,7 +40,7 @@ public class PlayerManager : MonoBehaviour
 
         rb2D = GetComponent<Rigidbody2D>();
         spriteRender = GetComponent<SpriteRenderer>();
-        
+
     }
 
     void Update()
@@ -46,7 +48,6 @@ public class PlayerManager : MonoBehaviour
 
         PlayerMovementHandle();
         PlayerHp();
-
     }
 
 
@@ -62,15 +63,15 @@ public class PlayerManager : MonoBehaviour
 
         Flip(horizontal);
         Jump();
-     
-    } 
+
+    }
 
     void GroundCheck()
     {
         isGrounded = false;
 
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, 0.2f, groundLayer);
-        if (colliders.Length>0)
+        if (colliders.Length > 0)
         {
             isGrounded = true;
         }
@@ -78,7 +79,7 @@ public class PlayerManager : MonoBehaviour
 
     public void Jump()
     {
-     
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isGrounded)
@@ -104,7 +105,7 @@ public class PlayerManager : MonoBehaviour
 
     public void Flip(float horiznotal)
     {
-        if (horiznotal>0 &&!isFacingRight || horiznotal < 0 && isFacingRight)
+        if (horiznotal > 0 && !isFacingRight || horiznotal < 0 && isFacingRight)
         {
             isFacingRight = !isFacingRight;
 
@@ -115,7 +116,8 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void PlayerHp () {
+    public void PlayerHp()
+    {
 
         #region Moved to other Script for testing yet to deleted.
         //for (int i = 0; i < hearts.Length; i++) -- Moved to UiManager
@@ -153,13 +155,22 @@ public class PlayerManager : MonoBehaviour
     {
         currentHealth -= amount;
 
-        if (currentHealth <=0)
+        if (currentHealth <= 0)
         {
             //Dead animation 
             //GameOverScreen
         }
     }
 
-
+    public IEnumerator DealDamagePerTime(int damage)
+    {
+        //we can add visual that shows that the player got attacked
+        GetDamage(damage);
+        yield return new WaitForSeconds(damageTime);
+        if (CoroutineBreak)
+        {
+            StartCoroutine(DealDamagePerTime(1));
+        }
+    }
 
 }

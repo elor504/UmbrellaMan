@@ -8,17 +8,43 @@ public class PoisonCloud : MonoBehaviour
     [SerializeField] bool isPurified;
     [SerializeField] Color purifiedColor;
     [SerializeField] Color corruptiveColor;
+    [SerializeField] Collider2D[] colliders;
     #endregion
 
     #region Private Fields
     SpriteRenderer spriteRenderer;
-    #endregion 
+    #endregion
 
+    //Timer
+    [SerializeField]
+    float purificationTime;
+    float purificationCD;
+    bool gotPurified;
+
+    public bool getIsPurified => isPurified;
     private void Awake()
     {
         if (spriteRenderer == null)
             spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         ChangeCloudSprite();
+    }
+
+
+    private void Update()
+    {
+        if (gotPurified)
+        {
+            if (purificationCD > 0)
+            {
+                purificationCD -= Time.deltaTime;
+            }
+            else if (purificationCD < 0)
+            {
+                gotPurified = false;
+                purificationCD = 0;
+                ChangeCloud(false);
+            }
+        }
     }
 
     public void ChangeCloud(bool gettingPurified)
@@ -34,16 +60,17 @@ public class PoisonCloud : MonoBehaviour
         else
             spriteRenderer.color = corruptiveColor;
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Projectile")
+        if (collision.gameObject.tag == "Projectile")
         {
-            Debug.Log(collision.gameObject.name);
-            if (isPurified)
-                collision.GetComponent<Projectile>().ChangeProjectileType(projectileTypes.purified);
-            else
-                collision.GetComponent<Projectile>().ChangeProjectileType(projectileTypes.corruptive);
+            purificationCD = purificationTime;
+            Projectile projectile = collision.gameObject.GetComponent<Projectile>();
+            projectile.EndProjectile();
+            gotPurified = true;
+            ChangeCloud(true);
         }
     }
+
+
 }
