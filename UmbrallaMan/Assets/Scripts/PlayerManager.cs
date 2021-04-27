@@ -14,7 +14,7 @@ public class PlayerManager : MonoBehaviour
     public int maxHealth;
     public float damageTime;
     public bool CoroutineBreak;
-    public bool gettingHit;
+    //public bool gettingHit;
     // public Image[] hearts;  -- Moved to UiManager
     //public Sprite fullHeart; -- Moved to UiManager
     //public Sprite emptyHeart; -- Moved to UiManager
@@ -26,17 +26,17 @@ public class PlayerManager : MonoBehaviour
     private SpriteRenderer spriteRender;
     private bool isCuteScene;
     private bool isFacingRight;
-    private Rigidbody2D rb2D;
+    [HideInInspector]
+    public Rigidbody2D rb2D;
 
     #endregion
 
 
     Umbrella playerUmbrella;
     CameraController cameraController;
-
+    PlatformerManager platofmerManager;
     private void Start()
     {
-
 
         rb2D = GetComponent<Rigidbody2D>();
         spriteRender = GetComponent<SpriteRenderer>();
@@ -166,11 +166,11 @@ public class PlayerManager : MonoBehaviour
     {
         //we can add visual that shows that the player got attacked
         GetDamage(damage);
+       
         yield return new WaitForSeconds(damageTime);
         if (CoroutineBreak)
         {
             StartCoroutine(DealDamagePerTime(1));
         }
     }
-
 }
