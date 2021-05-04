@@ -13,7 +13,8 @@ public class PlayerManager : MonoBehaviour
     public int currentHealth;
     public int maxHealth;
     public float damageTime;
-    public bool CoroutineBreak;
+    
+  //  public bool CoroutineBreak;
     //public bool gettingHit;
     // public Image[] hearts;  -- Moved to UiManager
     //public Sprite fullHeart; -- Moved to UiManager
@@ -23,31 +24,40 @@ public class PlayerManager : MonoBehaviour
 
 
     #region Private Fields
+
+    private bool isRespawning;
+    private Vector3 respawnPoint;
+    public  GameManager gameManager;
     private SpriteRenderer spriteRender;
     private bool isCuteScene;
     private bool isFacingRight;
     [HideInInspector]
     public Rigidbody2D rb2D;
 
+    
+
+    public float respawnLength;
+
     #endregion
 
 
-    Umbrella playerUmbrella;
-    CameraController cameraController;
-    PlatformerManager platofmerManager;
+    Umbrella _playerUmbrella;
+    CameraController _cameraController;
+   public PlatformerManager _platofmerManager;
     private void Start()
     {
-
         rb2D = GetComponent<Rigidbody2D>();
         spriteRender = GetComponent<SpriteRenderer>();
 
+        respawnPoint = gameObject.transform.position;
     }
 
     void Update()
     {
-
+      
         PlayerMovementHandle();
         PlayerHp();
+
     }
 
 
@@ -149,28 +159,63 @@ public class PlayerManager : MonoBehaviour
             currentHealth = maxHealth;
         }
 
+        if (currentHealth <= 0)
+        {
+            
+            //Dead animation 
+            //GameOverScreen
+            Respawn();
+        }
     }
 
     public void GetDamage(int amount)
     {
-        currentHealth -= amount;
-
-        if (currentHealth <= 0)
-        {
-            //Dead animation 
-            //GameOverScreen
-        }
+      
+            currentHealth -= amount;
+        
     }
+
+    public void Respawn()
+    {
+        if (!isRespawning)
+        {
+            StartCoroutine("RespawnCo");
+
+        }
+
+
+    }
+
+    public void SetCheckPoint(Vector3 newPos)
+    {
+        respawnPoint = newPos;
+        
+    }
+
+    public IEnumerator RespawnCo()
+    {
+        isRespawning = true;
+
+        yield return new WaitForSecondsRealtime(respawnLength);
+        isRespawning = false;
+
+        gameObject.transform.position = respawnPoint;
+        currentHealth = maxHealth;
+
+    }
+
 
     public IEnumerator DealDamagePerTime(int damage)
     {
         //we can add visual that shows that the player got attacked
-        GetDamage(damage);
-       
-        yield return new WaitForSeconds(damageTime);
-        if (CoroutineBreak)
+        if (_platofmerManager.canTakeDmg)
         {
-            StartCoroutine(DealDamagePerTime(1));
+            _platofmerManager.canTakeDmg = false;
+            GetDamage(damage);
+            yield return new WaitForSecondsRealtime(damageTime);
+            _platofmerManager.canTakeDmg = true;
+
         }
+        
     }
 }

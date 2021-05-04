@@ -168,7 +168,8 @@ MonoBehaviour:
   maxHealth: 3
   damageTime: 3
   CoroutineBreak: 0
-  gettingHit: 0
+  rb2D: {fileID: 0}
+  _platofmerManager: {fileID: 0}
 --- !u!114 &5203330002223574495
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -36,16 +36,14 @@ public class Rain : MonoBehaviour
         {
             PlayerManager player = collision.GetComponent<PlayerManager>();
             Umbrella umbrella = collision.GetComponent<Umbrella>();
-            if (!IsPlayerIsProtecting(umbrella) && !player.CoroutineBreak)
-            {
-                player.CoroutineBreak = true;
-                StartCoroutine(player.DealDamagePerTime(1));
-            }
-            else if (IsPlayerIsProtecting(umbrella) && player.CoroutineBreak)
-            {
-                player.CoroutineBreak = false;
-                StopCoroutine(player.DealDamagePerTime(1));
-            }
+            //if (!IsPlayerIsProtecting(umbrella) && !player.CoroutineBreak)
+            //{
+            //    //StartCoroutine(player.DealDamagePerTime(1));
+            //}
+            //else if (IsPlayerIsProtecting(umbrella) && player.CoroutineBreak)
+            //{
+            //    //StopCoroutine(player.DealDamagePerTime(1));
+            //}
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -53,10 +51,7 @@ public class Rain : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             PlayerManager player = collision.GetComponent<PlayerManager>();
-            if (player.CoroutineBreak)
-            {
-                player.CoroutineBreak = false;
-            }
+       
         }
     }
 
