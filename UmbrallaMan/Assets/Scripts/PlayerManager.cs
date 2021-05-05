@@ -42,7 +42,7 @@ public class PlayerManager : MonoBehaviour
 
 
     Umbrella _playerUmbrella;
-    CameraController _cameraController;
+   public CameraController _cameraController;
    public PlatformerManager _platofmerManager;
     private void Start()
     {
@@ -54,7 +54,7 @@ public class PlayerManager : MonoBehaviour
 
     void Update()
     {
-      
+      _cameraController.UpdateCameraPos(gameObject.transform);
         PlayerMovementHandle();
         PlayerHp();
 
@@ -200,7 +200,9 @@ public class PlayerManager : MonoBehaviour
         isRespawning = false;
 
         gameObject.transform.position = respawnPoint;
-        currentHealth = maxHealth;
+        GetDamage(1); // does 1 dmg to player?
+       // currentHealth = maxHealth; -- reset life back full
+
 
     }
 
