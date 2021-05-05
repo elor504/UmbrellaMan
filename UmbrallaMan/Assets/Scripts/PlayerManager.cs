@@ -3,219 +3,227 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    #region Public Fields
-    public float movmentSpeed;
-    public float jumpForce;
-    public Transform groundCheck;
-    public LayerMask groundLayer;
-    public bool isGrounded;
-    public bool isGliding;
-    public int currentHealth;
-    public int maxHealth;
-    public float damageTime;
-    
-  //  public bool CoroutineBreak;
-    //public bool gettingHit;
-    // public Image[] hearts;  -- Moved to UiManager
-    //public Sprite fullHeart; -- Moved to UiManager
-    //public Sprite emptyHeart; -- Moved to UiManager
+	#region Public Fields
+	public float movmentSpeed;
+	public float jumpForce;
+	public Transform groundCheck;
+	public LayerMask groundLayer;
+	public bool isGrounded;
+	public bool isGliding;
+	public int currentHealth;
+	public int maxHealth;
+	public float damageTime;
+	public bool canBeHit;
+	public PlayerAnimation playerAnim;
 
-    #endregion
+	//  public bool CoroutineBreak;
+	//public bool gettingHit;
+	// public Image[] hearts;  -- Moved to UiManager
+	//public Sprite fullHeart; -- Moved to UiManager
+	//public Sprite emptyHeart; -- Moved to UiManager
 
+	#endregion
 
-    #region Private Fields
+	#region Private Fields
 
-    private bool isRespawning;
-    private Vector3 respawnPoint;
-    public  GameManager gameManager;
-    private SpriteRenderer spriteRender;
-    private bool isCuteScene;
-    private bool isFacingRight;
-    [HideInInspector]
-    public Rigidbody2D rb2D;
-
-    
-
-    public float respawnLength;
-
-    #endregion
+	private bool isRespawning;
+	private Vector3 respawnPoint;
+	public GameManager gameManager;
+	private SpriteRenderer spriteRender;
+	private bool isCuteScene;
+	private bool isFacingRight;
+	[HideInInspector]
+	public Rigidbody2D rb2D;
 
 
-    Umbrella _playerUmbrella;
-    CameraController _cameraController;
-   public PlatformerManager _platofmerManager;
-    private void Start()
-    {
-        rb2D = GetComponent<Rigidbody2D>();
-        spriteRender = GetComponent<SpriteRenderer>();
 
-        respawnPoint = gameObject.transform.position;
-    }
+	public float respawnLength;
 
-    void Update()
-    {
-      
-        PlayerMovementHandle();
-        PlayerHp();
-
-    }
+	#endregion
 
 
-    public void PlayerMovementHandle()
-    {
-        GroundCheck();
-        float horizontal = Input.GetAxis("Horizontal");
-        Vector3 movement = new Vector3(horizontal, 0f, 0f);
-        transform.position += movement * Time.deltaTime * movmentSpeed;
+	Umbrella _playerUmbrella;
+	CameraController _cameraController;
+	public PlatformerManager _platofmerManager;
+	private void Start()
+	{
+		canBeHit = true;
+		rb2D = GetComponent<Rigidbody2D>();
+		spriteRender = GetComponent<SpriteRenderer>();
 
-        //var movement = Input.GetAxis("Horizontal");
-        //rb2D.velocity = new Vector2(movement, rb2D.velocity.y) * movmentSpeed * Time.deltaTime;
+		respawnPoint = gameObject.transform.position;
+	}
 
-        Flip(horizontal);
-        Jump();
+	void Update()
+	{
 
-    }
+		PlayerMovementHandle();
+		PlayerHp();
 
-    void GroundCheck()
-    {
-        isGrounded = false;
-
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, 0.2f, groundLayer);
-        if (colliders.Length > 0)
-        {
-            isGrounded = true;
-        }
-    }
-
-    public void Jump()
-    {
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (isGrounded)
-            {
-                //rb2D.velocity = Vector2.up * jumpForce;
-                rb2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-
-            }
-
-        }
-        #region Testing for better results yet to delete
-        //else if ((Input.GetKey(KeyCode.Space)&& !isGrounded))
-        //{
-        //    isGliding = true;
-        //}
-        //else
-        //{
-        //    isGliding = false;
-        //}
-        #endregion
-
-    }
-
-    public void Flip(float horiznotal)
-    {
-        if (horiznotal > 0 && !isFacingRight || horiznotal < 0 && isFacingRight)
-        {
-            isFacingRight = !isFacingRight;
-
-            Vector3 scale = transform.localScale;
-
-            scale.x *= -1;
-            transform.localScale = scale;
-        }
-    }
-
-    public void PlayerHp()
-    {
-
-        #region Moved to other Script for testing yet to deleted.
-        //for (int i = 0; i < hearts.Length; i++) -- Moved to UiManager
-        //{
-
-        //    if (i < currentHealth)
-        //    {
-        //        hearts[i].sprite = fullHeart;
-        //    }
-        //    else
-        //    {
-        //        hearts[i].sprite = emptyHeart;
-        //    }
+	}
 
 
-        //    if (i < maxHealth)
-        //    {
-        //        hearts[i].enabled = true;
-        //    }
-        //    else
-        //    {
-        //        hearts[i].enabled = false;
-        //    }
-        //}
-        #endregion
+	public void PlayerMovementHandle()
+	{
+		GroundCheck();
+		float horizontal = Input.GetAxis("Horizontal");
+		Vector3 movement = new Vector3(horizontal, 0f, 0f);
+		transform.position += movement * Time.deltaTime * movmentSpeed;
 
-        if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
+		//var movement = Input.GetAxis("Horizontal");
+		//rb2D.velocity = new Vector2(movement, rb2D.velocity.y) * movmentSpeed * Time.deltaTime;
 
-        if (currentHealth <= 0)
-        {
-            
-            //Dead animation 
-            //GameOverScreen
-            Respawn();
-        }
-    }
+		Flip(horizontal);
+		Jump();
 
-    public void GetDamage(int amount)
-    {
-      
-            currentHealth -= amount;
-        
-    }
+	}
 
-    public void Respawn()
-    {
-        if (!isRespawning)
-        {
-            StartCoroutine("RespawnCo");
+	void GroundCheck()
+	{
+		isGrounded = false;
 
-        }
+		Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, 0.2f, groundLayer);
+		if (colliders.Length > 0)
+		{
+			isGrounded = true;
+		}
+	}
+
+	public void Jump()
+	{
+
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			if (isGrounded)
+			{
+				//rb2D.velocity = Vector2.up * jumpForce;
+				rb2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+
+			}
+
+		}
+		#region Testing for better results yet to delete
+		//else if ((Input.GetKey(KeyCode.Space)&& !isGrounded))
+		//{
+		//    isGliding = true;
+		//}
+		//else
+		//{
+		//    isGliding = false;
+		//}
+		#endregion
+
+	}
+
+	public void Flip(float horiznotal)
+	{
+		if (horiznotal > 0 && !isFacingRight || horiznotal < 0 && isFacingRight)
+		{
+			isFacingRight = !isFacingRight;
+
+			Vector3 scale = transform.localScale;
+
+			scale.x *= -1;
+			transform.localScale = scale;
+		}
+	}
+
+	public void PlayerHp()
+	{
+
+		#region Moved to other Script for testing yet to deleted.
+		//for (int i = 0; i < hearts.Length; i++) -- Moved to UiManager
+		//{
+
+		//    if (i < currentHealth)
+		//    {
+		//        hearts[i].sprite = fullHeart;
+		//    }
+		//    else
+		//    {
+		//        hearts[i].sprite = emptyHeart;
+		//    }
 
 
-    }
+		//    if (i < maxHealth)
+		//    {
+		//        hearts[i].enabled = true;
+		//    }
+		//    else
+		//    {
+		//        hearts[i].enabled = false;
+		//    }
+		//}
+		#endregion
 
-    public void SetCheckPoint(Vector3 newPos)
-    {
-        respawnPoint = newPos;
-        
-    }
+		if (currentHealth > maxHealth)
+		{
+			currentHealth = maxHealth;
+		}
 
-    public IEnumerator RespawnCo()
-    {
-        isRespawning = true;
+		if (currentHealth <= 0)
+		{
 
-        yield return new WaitForSecondsRealtime(respawnLength);
-        isRespawning = false;
+			//Dead animation 
+			//GameOverScreen
+			Respawn();
+		}
+	}
 
-        gameObject.transform.position = respawnPoint;
-        currentHealth = maxHealth;
+	public void GetDamage(int amount)
+	{
+		if (canBeHit)
+		{
+			canBeHit = false;
+			currentHealth -= amount;
+			playerAnim.HitGFX();
+			Debug.Log("Hit");
+		}
+		else
+		{
+			Debug.Log("Cannot be hit yet");
+		}
+	}
 
-    }
+	public void Respawn()
+	{
+		if (!isRespawning)
+		{
+			StartCoroutine("RespawnCo");
+
+		}
+	}
+
+	public void SetCheckPoint(Vector3 newPos)
+	{
+		respawnPoint = newPos;
+
+	}
+
+	public IEnumerator RespawnCo()
+	{
+		isRespawning = true;
+		
+		yield return new WaitForSecondsRealtime(respawnLength);
+		isRespawning = false;
+		playerAnim.SetPlayerNormalColor();
+		gameObject.transform.position = respawnPoint;
+		currentHealth = maxHealth;
+
+	}
 
 
-    public IEnumerator DealDamagePerTime(int damage)
-    {
-        //we can add visual that shows that the player got attacked
-        if (_platofmerManager.canTakeDmg)
-        {
-            _platofmerManager.canTakeDmg = false;
-            GetDamage(damage);
-            yield return new WaitForSecondsRealtime(damageTime);
-            _platofmerManager.canTakeDmg = true;
+	public IEnumerator DealDamagePerTime(int damage)
+	{
+		//we can add visual that shows that the player got attacked
+		if (_platofmerManager.canTakeDmg)
+		{
+			_platofmerManager.canTakeDmg = false;
+			GetDamage(damage);
+			yield return new WaitForSecondsRealtime(damageTime);
+			_platofmerManager.canTakeDmg = true;
 
-        }
-        
-    }
+		}
+
+	}
 }

@@ -7,6 +7,8 @@ public class Umbrella : MonoBehaviour
 
     [Header("Ammonatium related")]
     [SerializeField]
+    float bulletSpeed;
+    [SerializeField]
     private int maxAmmo;
     [SerializeField]
     private int currentAmmoAmount;
@@ -178,7 +180,7 @@ public class Umbrella : MonoBehaviour
             {
                 if (!projectilePooling[i].isActive)
                 {
-                    projectilePooling[i].InstantiateProjectileSetting(Mathf.RoundToInt(transform.localScale.x), projectileTypes.purified, umbrellaNozzle.position, getIsAimingUp);
+                    projectilePooling[i].InstantiateProjectileSetting(Mathf.RoundToInt(transform.localScale.x), projectileTypes.purified, umbrellaNozzle.position, getIsAimingUp, bulletSpeed);
                     canUseActiveProjectile = true;
                     break;
                 }
@@ -188,7 +190,8 @@ public class Umbrella : MonoBehaviour
         if (!canUseActiveProjectile)
         {
             Projectile projectile = Instantiate(projPrefab);
-            projectile.InstantiateProjectileSetting(Mathf.RoundToInt(transform.localScale.x), projectileTypes.purified, umbrellaNozzle.position, getIsAimingUp);
+            projectile.InstantiateProjectileSetting(Mathf.RoundToInt(transform.localScale.x), projectileTypes.purified, umbrellaNozzle.position, getIsAimingUp, bulletSpeed);
+            
             projectilePooling.Add(projectile);
         }
     }

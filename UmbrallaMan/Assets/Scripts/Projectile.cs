@@ -13,6 +13,7 @@ public class Projectile : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
     projectileTypes projType;
+    public projectileTypes getProjType => projType;
     float currentTime;
     int direction;
     bool isGoingUpward;
@@ -43,9 +44,9 @@ public class Projectile : MonoBehaviour
         if (isTest)
         {
             if (!isGoingSideWay)
-                InstantiateProjectileSetting(1, projectileTypes.corruptive, this.transform.position, false);
+                InstantiateProjectileSetting(1, projectileTypes.corruptive, this.transform.position, false,projectileSpeed);
             else
-                InstantiateProjectileSetting(1, projectileTypes.corruptive, this.transform.position, true);
+                InstantiateProjectileSetting(1, projectileTypes.corruptive, this.transform.position, true, projectileSpeed);
         }
     }
 
@@ -64,7 +65,7 @@ public class Projectile : MonoBehaviour
             }
         }
     }
-    public void InstantiateProjectileSetting(int dir, projectileTypes type, Vector2 playerPos, bool shootingUpward)
+    public void InstantiateProjectileSetting(int dir, projectileTypes type, Vector2 playerPos, bool shootingUpward,float speed)
     {
         currentTime = activeTime;
         gameObject.SetActive(true);
@@ -72,7 +73,7 @@ public class Projectile : MonoBehaviour
         transform.position = playerPos;
         isGoingUpward = shootingUpward;
         direction = -dir;
-
+        projectileSpeed = speed;
         ChangeProjectileType(type);
     }
 

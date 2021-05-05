@@ -49,7 +49,7 @@ MonoBehaviour:
   purifiedColor: {r: 0.0036325455, g: 0, b: 1, a: 1}
   isActive: 0
   corruptiveColor: {r: 0.013180494, g: 1, b: 0, a: 1}
-  projectileSpeed: 75
+  projectileSpeed: 700
   activeTime: 5
   isTest: 0
   isGoingSideWay: 0

@@ -467,19 +467,9 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5203330002223574480, guid: 3c63b3d9af068b547845472f1aa69e81,
         type: 3}
-      propertyPath: damageTime
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5203330002223574480, guid: 3c63b3d9af068b547845472f1aa69e81,
-        type: 3}
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1888117895}
-    - target: {fileID: 5203330002223574480, guid: 3c63b3d9af068b547845472f1aa69e81,
-        type: 3}
-      propertyPath: respawnLength
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5203330002223574480, guid: 3c63b3d9af068b547845472f1aa69e81,
         type: 3}
       propertyPath: _platofmerManager
