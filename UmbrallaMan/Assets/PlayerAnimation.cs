@@ -41,7 +41,8 @@ public class PlayerAnimation : MonoBehaviour
 		sprite.color = HitColor;
 		yield return new WaitForSeconds(invisibilityTime / 7);
 		sprite.color = NormalColor;
-		player.canBeHit = true;
+		//player.canBeHit = true;
+
 		//player can be hitted again, need to add a bool to the player so he would not take damage while this effects is activated
 	}
 
